@@ -1,0 +1,91 @@
+*{
+    /* 快捷键m0，p0敲回车 */
+    margin: 0;
+    padding: 0;
+    /* 定义这个盒子的宽度包括了内容本身+内边距+边框 */
+    box-sizing: border-box;
+}
+
+body{
+    /* 该标签代表一个字体系列，如果浏览器不支持第一个，就换成第二个，以此类推 */
+    font-family: sans-serif;
+    /* 设置为flex布局(弹性盒模型)以后，h3标签的背景图片也不会直接拉伸占据一行了，而是按照h3的长度来跟随，但是h3标签还是会占据一行 
+       flex布局核心：flex布局中有两个轴，横轴和纵轴，flex必须是放在父元素上，然后通过设置横轴和纵轴的排列方式来规定所有子元素
+       的布局，果然灵活
+       https://xluos.github.io/demo/flexbox/ flex的布局演示*/
+    display: flex;
+    /* 横向剧中 */
+    justify-content: center;
+    /* 垂直居中 */
+    align-items: center;
+    /* vh代表当前屏幕（就是当前浏览器窗口）可见高度的1% ，viewheight的缩写，所以还有viewwidth，效果还是动态的*/
+    height: 100vh;
+}
+
+.container{
+    /* flex还有浮动的作用，强行！让所有的元素排成一排 */
+    display: flex;
+    width: 90vw;
+
+}
+
+.panel{
+    /* contain一定要把背景图片显示完整，甚至会用多张缩小版一起填充
+       cover一定要把内容元素覆盖
+       两者都是按照比列显示 */
+    background-size: cover;
+    /* 让图片显示在中心 */
+    background-position: center;
+    /* 背景图片不重复，可以配合contain看看效果 */
+    background-repeat: no-repeat;
+    height: 80vh;
+    border-radius: 10px;
+    /* 直接就设置了文字的颜色 */
+    color: white;
+    /* 鼠标放上去就会变成小手形状  */
+    cursor: pointer;
+    /* 让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容 */
+    flex: 1;
+    margin: 10px;
+    /* 父元素设置成相对定位，不会影响该元素的布局 */
+    position: relative;
+    /* 所有变化的属性
+       只有具有中间值的css属性才能够添加过渡属性
+       只要指定的样式发生改变，就出发过渡动画，这也就是为什么消失的时候也是有动画的 */
+    transition: all 700ms ease-in 0s;
+}
+/* 找这个类下面的这个标签 */
+.panel h3{
+    /* 会去找上一个相对定位的父元素进行绝对定位，子绝父相！ */
+    position: absolute;
+    font-size: 24px;
+    /* 位置都会根据上一个相对定位的元素来进行设置 */
+    left: 20px;
+    bottom: 20px;
+    /* 设置元素的不透明级别，0-1 */
+    opacity: 0;
+}
+
+/* 找这个类下面的这个类
+   后面添加的属性会覆盖掉之前设置的属性 */
+.panel.active{
+    flex:10;
+}
+
+.panel.active h3{
+    opacity: 1;
+    /* 选择opacity变化的动画用时0.3s,方式为esse-in，延时0.4s执行（从这个类被修饰上开始计时） */
+    transition: opacity 0.3s ease-in 0.7s;
+}
+
+@media(max-width:480px) {
+    .container{
+        width: 100vw;
+    }
+
+    /* 选择第四个和第五个兄弟 */
+    .panel:nth-of-type(4), .panel:nth-of-type(5){
+        /* 设置不显示 */
+        display: none;
+    }
+}
