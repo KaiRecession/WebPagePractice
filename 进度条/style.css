@@ -1,0 +1,106 @@
+/* :root选择文档的根元素，用来声明css全局变量再合适不过了 */
+:root{
+    --line-border-fill:#3498db;
+    --line-border-empty:#e0e0e0;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f6f7f6;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container{
+    /* 设置字体居中，text本来就是指标签体里面的内容 */
+    text-align: center;
+}
+
+.progress-container{
+    display: flex;
+    /* 两边的元素最靠边站，剩下的元素平分空间 */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 30vw;
+    position: relative;
+}
+
+/* ::before 创建一个伪元素，其将成为匹配选中的元素的第一个子元素，通过content属性来设置内容 */
+.progress-container::before{
+    content:"";
+    background-color: var(--line-border-empty);
+    height:4px;
+    /* 百分比就是相对于父元素的百分比 */
+    width: 100%;
+    /* 本来已经被设置垂直居中了，但是自己本身有高度，所以不是以自己中心剧中的，向上移动一半的高度就是中心剧中，所以是-2px */
+    margin-top: -2px;
+    /* 绝对定位不是相对于父级定位嘛，所以说，此时父级就相当于它的背景了，好家伙 */
+    position: absolute;
+    /* 在绝对定位的基础上，让这个元素放在父级元素的下面 */
+    z-index: -1;
+}
+
+.progress{
+    background-color: var(--line-border-fill);
+    position: absolute;
+    height: 4px;
+    transform: translateY(-50%);
+    width: 0%;
+    z-index: -1;
+    transition: width 0.4s ease;
+}
+
+.circle{
+    background-color: #fff;
+    /* 数字的颜色 */
+    color: #999;
+    /* 下面三条语句合起来就是一个圆 */
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid var(--line-border-empty);
+    transition: border-color 0.3s ease 0.25s;
+}
+
+.circle.active{
+    /* 切记，每一次样式的改变都是覆盖，原本的样式还存在 */
+    border-color: var(--line-border-fill);
+}
+
+.btn{
+    background-color: var(--line-border-fill);
+    color: #fff;
+    border-radius: 10px;
+    border:0px;
+    padding:8px 30px;
+    font-size: 14px;
+    margin: 5px;
+}
+/* :active,代表元素活动时，当元素被点击时，就是活动的时候 */
+.btn:active{
+    transform: scale(0.98);
+}
+/* 当点击一下后，边框出现的颜色，边框会一直存在，直到点击按钮以外的区域 */
+.btn:focus{
+    outline:0;
+}
+
+.btn:disabled{
+    background-color: var(--line-border-empty);
+    /* 鼠标变成禁止形状 */
+    cursor: not-allowed;
+    /* 取消变形效果 */
+    transform: scale(1);
+}
